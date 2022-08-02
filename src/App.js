@@ -16,9 +16,13 @@ const App = () => {
     for (let i = 0; i < width * width; i++); {
       const randomColor = candyColors[Math.floor(Math.random() * candyColors.length)];
       colorArrangement.push(randomColor);
+      // console.log(randomColor, 'hello');
+      
 
     }
     setCurrentColor(colorArrangement);
+    // console.log(colorArrangement, 'goodby');
+    // console.log(width * width, 'yooooooo');
   };
 
 
@@ -26,7 +30,7 @@ const App = () => {
     createBoard();
 
   }, []);
-  // console.log(currentColor);
+  // console.log(currentColor, 'sup');
 
 
 
