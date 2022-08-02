@@ -35,6 +35,9 @@ const App = () => {
 
   return (
     <div className="app">
+      <div className='header'>
+        <h1>MATCH 3 GAME</h1>
+      </div>
       <div className='game'>
         {currentColor.map((candyColor, index) => (
           <img
