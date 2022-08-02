@@ -1,25 +1,60 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
 
-function App() {
+const width = 8;
+const candyColors = [
+  'blue', 'pink', 'green', 'red', 'yellow', 'purple',
+];
+
+
+const App = () => {
+
+  const [currentColor, setCurrentColor] = useState([]); 
+
+  const createBoard = () => {
+    const colorArrangement = [];
+    for (let i = 0; i < width * width; i++); {
+      const randomColor = candyColors[Math.floor(Math.random() * candyColors.length)];
+      colorArrangement.push(randomColor);
+      // console.log(randomColor, 'hello');
+      
+
+    }
+    setCurrentColor(colorArrangement);
+    // console.log(colorArrangement, 'goodby');
+    // console.log(width * width, 'yooooooo');
+  };
+
+
+  useEffect(() => {
+    createBoard();
+
+  }, []);
+  // console.log(currentColor, 'sup');
+
+
+
+
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <div className='header'>
+        <h1>MATCH 3 GAME</h1>
+      </div>
+      <div className='game'>
+        {currentColor.map((candyColor, index) => (
+          <img
+            key={index}
+            style={{ backgroundColor: candyColor }}
+          ></img>
+        ))
+        }
+
+      </div>
+
     </div>
   );
-}
+};
 
 export default App;
