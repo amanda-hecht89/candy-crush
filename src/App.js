@@ -1,15 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import './App.css';
+import greenFruit from './images/green.png';
+import yellowFruit from './images/yellow.png';
+import pinkFruit from './images/pink.png';
+import redFruit from './images/red.png';
+import orangeFruit from './images/orange.png';
+import purpleFruit from './images/purple.png';
+import blankFruit from './images/blank.png';
 
 const width = 8;
 const candyColors = [
-  'blue',
-  'green',
-  'coral',
-  'purple',
-  'red',
-  'yellow'
+  pinkFruit,
+  greenFruit,
+  orangeFruit,
+  purpleFruit,
+  redFruit,
+  yellowFruit
 ];
 
 function App() {
@@ -22,7 +29,7 @@ function App() {
       const columnOfThree = [i, i + width, i + width * 2];
       const decidedColor = currentColor[i];
       if (columnOfThree.every(square => currentColor[square] === decidedColor)) {
-        columnOfThree.forEach(square => currentColor[square] = '');
+        columnOfThree.forEach(square => currentColor[square] = blankFruit);
         return true;
       }
     }
@@ -34,7 +41,7 @@ function App() {
       const columnOfFour = [i, i + width, i + width * 2, i + width * 3];
       const decidedColor = currentColor[i];
       if (columnOfFour.every(square => currentColor[square] === decidedColor)) {
-        columnOfFour.forEach(square => currentColor[square] = '');
+        columnOfFour.forEach(square => currentColor[square] = blankFruit);
         return true;
       }
     }
@@ -48,7 +55,7 @@ function App() {
       const notValid = [6, 7, 14, 15, 22, 23, 30, 31, 38, 39, 46, 47, 54, 55, 63, 64];
       if (notValid.includes(i)) continue;
       if (rowOfThree.every(square => currentColor[square] === decidedColor)) {
-        rowOfThree.forEach(square => currentColor[square] = '');
+        rowOfThree.forEach(square => currentColor[square] = blankFruit);
         return true;
       }
     }
@@ -62,7 +69,7 @@ function App() {
       const notValid = [5, 6, 7, 13, 14, 15, 21, 22, 23, 29, 30, 31, 37, 38, 39, 45, 46, 47, 53, 54, 55, 62, 63, 64];
       if (notValid.includes(i)) continue;
       if (rowOfFour.every(square => currentColor[square] === decidedColor)) {
-        rowOfFour.forEach(square => currentColor[square] = '');
+        rowOfFour.forEach(square => currentColor[square] = blankFruit);
         return true;
       }
     }
@@ -74,13 +81,13 @@ function App() {
       const firstRow = [0, 1, 2, 3, 4, 5, 6, 7];
       // eslint-disable-next-line no-unused-vars
       const isFirstRow = firstRow.includes(i);
-      if (firstRow && currentColor[i] === '') {
+      if (firstRow && currentColor[i] === blankFruit) {
         let randomNum = Math.floor(Math.random() * candyColors.length);
         currentColor[i] = candyColors[randomNum];
       }
-      if ((currentColor[i + width]) === '') {
+      if ((currentColor[i + width]) === blankFruit) {
         currentColor[i + width] = currentColor[i];
-        currentColor[i] = '';
+        currentColor[i] = blankFruit;
       }
     }
   };
@@ -100,8 +107,8 @@ function App() {
     const draggedSquareId = parseInt(draggedSquare.getAttribute('data-id'));
     const replacedSquareId = parseInt(replacedSquare.getAttribute('data-id'));
     
-    currentColor[replacedSquareId] = draggedSquare.style.backgroundColor;
-    currentColor[draggedSquareId] = replacedSquare.style.backgroundColor;
+    currentColor[replacedSquareId] = draggedSquare.getAttribute('src');
+    currentColor[draggedSquareId] = replacedSquare.getAttribute('src');
 
     const validTableMoves = [
       draggedSquareId - 1,
@@ -124,8 +131,8 @@ function App() {
       setDraggedSquare(null);
       setReplacedSquare(null);
     } else {
-      currentColor[replacedSquareId] = replacedSquare.style.backgroundColor;
-      currentColor[draggedSquareId] = draggedSquare.style.backgroundColor;
+      currentColor[replacedSquareId] = replacedSquare.getAttribute('src');
+      currentColor[draggedSquareId] = draggedSquare.getAttribute('src');
       setCurrentColor([...currentColor]);
     }}
   
@@ -177,7 +184,8 @@ function App() {
         {currentColor.map((candyColor, index) => (
           <img
             key={index}
-            style={{ backgroundColor: candyColor }}
+            src={candyColor}
+            style={{ backgroundColor: candyColor, opacity:0.6 }}
             data-id={index}
             alt={candyColor}
             draggable={true}
@@ -193,7 +201,7 @@ function App() {
         }
 
       </div>
-
+      <h1>SCORE:</h1>
     </div>
     
   );
