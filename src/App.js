@@ -72,6 +72,7 @@ function App() {
   const moveBelow = () => {
     for (let i = 0; i <= 55; i++) {
       const firstRow = [0, 1, 2, 3, 4, 5, 6, 7];
+      // eslint-disable-next-line no-unused-vars
       const isFirstRow = firstRow.includes(i);
       if (firstRow && currentColor[i] === '') {
         let randomNum = Math.floor(Math.random() * candyColors.length);
@@ -94,7 +95,7 @@ function App() {
     setReplacedSquare(e.target);
   }
   
-  function dragEnd(e) {
+  function dragEnd() {
 
     const draggedSquareId = parseInt(draggedSquare.getAttribute('data-id'));
     const replacedSquareId = parseInt(replacedSquare.getAttribute('data-id'));
