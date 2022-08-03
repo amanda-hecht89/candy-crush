@@ -1,41 +1,37 @@
+
+
+
+
 import { useEffect, useState } from 'react';
 import './App.css';
 
 const width = 8;
 const candyColors = [
-  'blue', 'pink', 'green', 'red', 'yellow', 'purple',
+  'blue',
+  'green',
+  'orange',
+  'purple',
+  'red',
+  'yellow'
 ];
 
 
-const App = () => {
 
+function App() {
   const [currentColor, setCurrentColor] = useState([]); 
-
   const createBoard = () => {
-    const colorArrangement = [];
-    for (let i = 0; i < width * width; i++); {
-      const randomColor = candyColors[Math.floor(Math.random() * candyColors.length)];
-      colorArrangement.push(randomColor);
-      // console.log(randomColor, 'hello');
-      
-
-    }
-    setCurrentColor(colorArrangement);
-    // console.log(colorArrangement, 'goodby');
-    // console.log(width * width, 'yooooooo');
+    const randomColorArrangement = [];
+    for (let i = 0; i < width * width; i++) {
+      const randomNumber = Math.floor(Math.random() * candyColors.length);
+      const randomColor = candyColors[randomNumber];
+      randomColorArrangement.push(randomColor);
+    }    
+    setCurrentColor(randomColorArrangement);
   };
-
-
   useEffect(() => {
+
     createBoard();
-
   }, []);
-  // console.log(currentColor, 'sup');
-
-
-
-
-
 
   return (
     <div className="app">
@@ -54,7 +50,9 @@ const App = () => {
       </div>
 
     </div>
+    
   );
-};
+}
 
 export default App;
+
