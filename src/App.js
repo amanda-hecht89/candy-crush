@@ -69,6 +69,18 @@ function App() {
   };
 
 
+  const moveBelow = () => {
+    for (let i = 0; i < 64 - width; i++) {
+      if ((currentColor[i + width]) === '') {
+        currentColor[i + width] = currentColor[i];
+        currentColor[i] = '';
+      
+      }
+    }
+  
+  };
+
+
   const createBoard = () => {
     const randomColorArrangement = [];
     for (let i = 0; i < width * width; i++) {
@@ -92,11 +104,12 @@ function App() {
       checkRowFour();
       checkColThree();
       checkRowThree();
+      moveBelow();
       setCurrentColor([...currentColor]);
 
-    }, 100);
+    }, 1000);
     return () => clearInterval(timer);
-  }, [checkColFour, checkRowFour, checkColThree, checkRowThree, currentColor]);
+  }, [checkColFour, checkRowFour, checkColThree, checkRowThree, currentColor, moveBelow]);
 
 
 
