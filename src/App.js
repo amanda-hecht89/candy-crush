@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 
 
 
@@ -7,9 +8,9 @@ import './App.css';
 
 const width = 8;
 const candyColors = [
-  'blue',
-  'green',
-  'orange',
+  'lightblue',
+  'lightgreen',
+  'lightcoral',
   'purple',
   'red',
   'yellow'
@@ -19,6 +20,55 @@ const candyColors = [
 
 function App() {
   const [currentColor, setCurrentColor] = useState([]); 
+
+  const checkColThree = () => {
+    for (let i = 0; i < 47; i++) {
+      const columnOfThree = [i, i + width, i + width * 2];
+      const decidedColor = currentColor[i];
+      if (columnOfThree.every(square => currentColor[square] === decidedColor)) {
+        columnOfThree.forEach(square => currentColor[square] = '');
+      }
+    }
+  };
+
+
+  const checkColFour = () => {
+    for (let i = 0; i < 39; i++) {
+      const columnOfFour = [i, i + width, i + width * 2, i + width * 3];
+      const decidedColor = currentColor[i];
+      if (columnOfFour.every(square => currentColor[square] === decidedColor)) {
+        columnOfFour.forEach(square => currentColor[square] = '');
+      }
+    }
+  };
+
+
+  const checkRowThree = () => {
+    for (let i = 0; i < 64; i++) {
+      const rowOfThree = [i, i + 1, i + 2];
+      const decidedColor = currentColor[i];
+      const notValid = [6, 7, 14, 15, 22, 23, 30, 31, 38, 39, 46, 47, 54, 55, 63, 64];
+      if (notValid.includes(i)) continue;
+      if (rowOfThree.every(square => currentColor[square] === decidedColor)) {
+        rowOfThree.forEach(square => currentColor[square] = '');
+      }
+    }
+  };
+
+
+  const checkRowFour = () => {
+    for (let i = 0; i < 64; i++) {
+      const rowOfFour = [i, i + 1, i + 2, i + 3];
+      const decidedColor = currentColor[i];
+      const notValid = [5, 6, 7, 13, 14, 15, 21, 22, 23, 29, 30, 31, 37, 38, 39, 45, 46, 47, 53, 54, 55, 62, 63, 64];
+      if (notValid.includes(i)) continue;
+      if (rowOfFour.every(square => currentColor[square] === decidedColor)) {
+        rowOfFour.forEach(square => currentColor[square] = '');
+      }
+    }
+  };
+
+
   const createBoard = () => {
     const randomColorArrangement = [];
     for (let i = 0; i < width * width; i++) {
@@ -28,10 +78,28 @@ function App() {
     }    
     setCurrentColor(randomColorArrangement);
   };
-  useEffect(() => {
 
+
+
+
+  useEffect(() => {
     createBoard();
   }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      checkColFour();
+      checkRowFour();
+      checkColThree();
+      checkRowThree();
+      setCurrentColor([...currentColor]);
+
+    }, 100);
+    return () => clearInterval(timer);
+  }, [checkColFour, checkRowFour, checkColThree, checkRowThree, currentColor]);
+
+
+
 
   return (
     <div className="app">
