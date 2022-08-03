@@ -161,7 +161,7 @@ function App() {
       moveBelow();
       setCurrentColor([...currentColor]);
       
-    }, 600);
+    }, 300);
     return () => clearInterval(timer);
   }, [checkColFour, checkRowFour, checkColThree, checkRowThree, currentColor, moveBelow]);
   
