@@ -8,6 +8,7 @@ import redFruit from './images/red.png';
 import orangeFruit from './images/orange.png';
 import purpleFruit from './images/purple.png';
 import blankFruit from './images/blank.png';
+import ScoreBoard from './Scoreboard';
 
 const width = 8;
 const candyColors = [
@@ -23,12 +24,17 @@ function App() {
   const [currentColor, setCurrentColor] = useState([]);
   const [draggedSquare, setDraggedSquare] = useState(null);
   const [replacedSquare, setReplacedSquare] = useState(null);
+  const [scoreDisplay, setScoreDisplay] = useState(0);
+
+
 
   const checkColThree = () => {
     for (let i = 0; i <= 47; i++) {
       const columnOfThree = [i, i + width, i + width * 2];
       const decidedColor = currentColor[i];
-      if (columnOfThree.every(square => currentColor[square] === decidedColor)) {
+      const ifBlank = currentColor[i] === blankFruit;
+      if (columnOfThree.every(square => currentColor[square] === decidedColor && !ifBlank)) {
+        setScoreDisplay((score) => score + 3);
         columnOfThree.forEach(square => currentColor[square] = blankFruit);
         return true;
       }
@@ -40,7 +46,9 @@ function App() {
     for (let i = 0; i <= 39; i++) {
       const columnOfFour = [i, i + width, i + width * 2, i + width * 3];
       const decidedColor = currentColor[i];
-      if (columnOfFour.every(square => currentColor[square] === decidedColor)) {
+      const ifBlank = currentColor[i] === blankFruit;
+      if (columnOfFour.every(square => currentColor[square] === decidedColor && !ifBlank)) {
+        setScoreDisplay((score) => score + 4);
         columnOfFour.forEach(square => currentColor[square] = blankFruit);
         return true;
       }
@@ -53,8 +61,10 @@ function App() {
       const rowOfThree = [i, i + 1, i + 2];
       const decidedColor = currentColor[i];
       const notValid = [6, 7, 14, 15, 22, 23, 30, 31, 38, 39, 46, 47, 54, 55, 63, 64];
+      const ifBlank = currentColor[i] === blankFruit;
       if (notValid.includes(i)) continue;
-      if (rowOfThree.every(square => currentColor[square] === decidedColor)) {
+      if (rowOfThree.every(square => currentColor[square] === decidedColor && !ifBlank)) {
+        setScoreDisplay((score) => score + 3);
         rowOfThree.forEach(square => currentColor[square] = blankFruit);
         return true;
       }
@@ -67,8 +77,10 @@ function App() {
       const rowOfFour = [i, i + 1, i + 2, i + 3];
       const decidedColor = currentColor[i];
       const notValid = [5, 6, 7, 13, 14, 15, 21, 22, 23, 29, 30, 31, 37, 38, 39, 45, 46, 47, 53, 54, 55, 62, 63, 64];
+      const ifBlank = currentColor[i] === blankFruit;
       if (notValid.includes(i)) continue;
-      if (rowOfFour.every(square => currentColor[square] === decidedColor)) {
+      if (rowOfFour.every(square => currentColor[square] === decidedColor && !ifBlank)) {
+        setScoreDisplay((score) => score + 4);
         rowOfFour.forEach(square => currentColor[square] = blankFruit);
         return true;
       }
@@ -91,7 +103,6 @@ function App() {
       }
     }
   };
-  
   
   function dragStart(e) {
     setDraggedSquare(e.target);
@@ -178,7 +189,7 @@ function App() {
   return (
     <div className="app">
       <div className='header'>
-        <h1>MATCH 3 GAME</h1>
+        <h1>MATCH 3 || 4 GAME</h1>
       </div>
       <div className='game'>
         {currentColor.map((candyColor, index) => (
@@ -197,11 +208,9 @@ function App() {
             onDragEnd={dragEnd}
           />
         ))
-    
         }
-
       </div>
-      <h1>SCORE:</h1>
+      <ScoreBoard score={scoreDisplay}/>
     </div>
     
   );
