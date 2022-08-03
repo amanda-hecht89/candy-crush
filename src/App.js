@@ -103,23 +103,20 @@ function App() {
     currentColor[replacedSquareId] = draggedSquare.style.backgroundColor;
     currentColor[draggedSquareId] = replacedSquare.style.backgroundColor;
 
-    const validMoves = [
+    const validTableMoves = [
       draggedSquareId - 1,
       draggedSquareId - width,
       draggedSquareId + 1,
       draggedSquareId + width,
     ];
 
-    const validMove = validMoves.includes(replacedSquareId);
+    const validMove = validTableMoves.includes(replacedSquareId);
 
-    // eslint-disable-next-line no-undef
-    const isColFour = checkForColFour();
-    // eslint-disable-next-line no-undef
-    const isRowFour = checkForRowFour();
-    // eslint-disable-next-line no-undef
-    const isColThree = checkForColThree();
-    // eslint-disable-next-line no-undef
-    const isRowThree = checkForRowThree();
+ 
+    const isColFour = checkColFour();
+    const isRowFour = checkRowFour();
+    const isColThree = checkColThree();
+    const isRowThree = checkRowThree();
 
     if (replacedSquareId &&
        validMove &&
@@ -182,7 +179,7 @@ function App() {
             key={index}
             style={{ backgroundColor: candyColor }}
             data-id={index}
-            alt={candyColors}
+            alt={candyColor}
             draggable={true}
             onDragStart={dragStart}
             onDragOver={(e) => e.preventDefault()}
