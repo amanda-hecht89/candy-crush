@@ -25,3 +25,12 @@
   width: 70px;
   height: 70px;
 }
+
+h1 {
+  background-color: rgba(77, 203, 161, 0.648);
+  font-size: 30px;
+}
+
+.header {
+align-items: center;
+}
