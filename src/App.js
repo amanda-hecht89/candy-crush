@@ -23,6 +23,7 @@ function App() {
       const decidedColor = currentColor[i];
       if (columnOfThree.every(square => currentColor[square] === decidedColor)) {
         columnOfThree.forEach(square => currentColor[square] = '');
+        return true;
       }
     }
   };
@@ -34,6 +35,7 @@ function App() {
       const decidedColor = currentColor[i];
       if (columnOfFour.every(square => currentColor[square] === decidedColor)) {
         columnOfFour.forEach(square => currentColor[square] = '');
+        return true;
       }
     }
   };
@@ -47,6 +49,7 @@ function App() {
       if (notValid.includes(i)) continue;
       if (rowOfThree.every(square => currentColor[square] === decidedColor)) {
         rowOfThree.forEach(square => currentColor[square] = '');
+        return true;
       }
     }
   };
@@ -60,6 +63,7 @@ function App() {
       if (notValid.includes(i)) continue;
       if (rowOfFour.every(square => currentColor[square] === decidedColor)) {
         rowOfFour.forEach(square => currentColor[square] = '');
+        return true;
       }
     }
   };
@@ -81,27 +85,51 @@ function App() {
   };
   
   
-  function dragStart() {
-    console.log('dragstart');
+  function dragStart(e) {
     setDraggedSquare(e.target);
     
   }
   
-  function dragDrop() {
-    console.log('dragdrop');
+  function dragDrop(e) {
     setReplacedSquare(e.target);
   }
   
-  function dragEnd() {
-    console.log('dragend');
-    
+  function dragEnd(e) {
+
     const draggedSquareId = parseInt(draggedSquare.getAttribute('data-id'));
     const replacedSquareId = parseInt(replacedSquare.getAttribute('data-id'));
     
     currentColor[replacedSquareId] = draggedSquare.style.backgroundColor;
     currentColor[draggedSquareId] = replacedSquare.style.backgroundColor;
-    
-  }
+
+    const validMoves = [
+      draggedSquareId - 1,
+      draggedSquareId - width,
+      draggedSquareId + 1,
+      draggedSquareId + width,
+    ];
+
+    const validMove = validMoves.includes(replacedSquareId);
+
+    // eslint-disable-next-line no-undef
+    const isColFour = checkForColFour();
+    // eslint-disable-next-line no-undef
+    const isRowFour = checkForRowFour();
+    // eslint-disable-next-line no-undef
+    const isColThree = checkForColThree();
+    // eslint-disable-next-line no-undef
+    const isRowThree = checkForRowThree();
+
+    if (replacedSquareId &&
+       validMove &&
+        (isColFour || isRowFour || isColThree || isRowThree)) {
+      setDraggedSquare(null);
+      setReplacedSquare(null);
+    } else {
+      currentColor[replacedSquareId] = replacedSquare.style.backgroundColor;
+      currentColor[draggedSquareId] = draggedSquare.style.backgroundColor;
+      setCurrentColor([...currentColor]);
+    }}
   
   
   
@@ -174,4 +202,3 @@ function App() {
 }
 
 export default App;
-
