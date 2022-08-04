@@ -192,8 +192,8 @@ function App() {
         <h1>MATCH 3 || 4 GAME</h1>
         <h1>I built this app all alone! I hope you enjoy playing it<br/>
         as much as I did making it.</h1>
-        <h1>Can match 3 or 4 friuts vertically or horizontally<br/>
-        new fruits drop from top. colloect 3 for 3 point and collect 4 for 4 points!</h1>
+        <h1>Can match 3 or 4 fruits vertically or horizontally.<br/>
+        New fruits drop from top. Collect 3 for 3 points and collect 4 for 4 points!</h1>
       </div>
       <div className='game'>
         {currentColor.map((candyColor, index) => (
